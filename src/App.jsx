@@ -24,13 +24,15 @@ function App() {
         ></div>
 
         <Navbar />
-        <Routes>
-          {/* Define your routes here */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/albums" element={<ExplorePage />} />
-          {/* If no other routes match, show the error page */}
-          <Route path="/*" element={<ErrorPage errorCode={404} />} />
-        </Routes>
+        <div style={{ position: "relative", top: "60px" }}>
+          <Routes>
+            {/* Define your routes here */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/albums" element={<ExplorePage />} />
+            {/* If no other routes match, show the error page */}
+            <Route path="/*" element={<ErrorPage errorCode={404} />} />
+          </Routes>
+        </div>
       </Router>
     </>
   );
