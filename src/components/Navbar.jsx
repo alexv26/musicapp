@@ -9,6 +9,15 @@ import { useState, useEffect } from "react";
  * @returns JSX.Element
  */
 
+import HamburgerMenu from "./HamburgerMenu.jsx";
+
+const navbarLinks = [
+  { name: "Home", linkTo: "/" },
+  { name: "About", linkTo: "/about" },
+  { name: "Albums", linkTo: "/albums" },
+  { name: "Lists", linkTo: "/lists" },
+];
+
 export default function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,18 +43,11 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <ul className="flex flex-row gap-8 text-2xl">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/templatePage">About</Link>
-            </li>
-            <li>
-              <Link to="/plan">Albums</Link>
-            </li>
-            <li>
-              <Link to="/explore">Lists</Link>
-            </li>
+            {navbarLinks.map(({ name, linkTo }) => (
+              <li key={name}>
+                <Link to={linkTo}>{name}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -67,44 +69,18 @@ export default function Navbar() {
 
         {/* Hamburger (mobile only) */}
         <div className="md:hidden flex items-center">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col justify-between w-8 h-6 focus:outline-none"
-          >
-            <span
-              className={`h-1 bg-text rounded transition-transform duration-300 ${
-                menuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              className={`h-1 bg-text rounded transition-opacity duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`h-1 bg-text rounded transition-transform duration-300 ${
-                menuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
-          </button>
+          <HamburgerMenu state={menuOpen} setState={setMenuOpen} />
         </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden text-text fixed top-16 left-0 w-full bg-box shadow-md z-40 flex flex-col items-center gap-4 py-4 text-xl">
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>
-            About
-          </Link>
-          <Link to="/plan" onClick={() => setMenuOpen(false)}>
-            Albums
-          </Link>
-          <Link to="/explore" onClick={() => setMenuOpen(false)}>
-            Lists
-          </Link>
+          {navbarLinks.map(({ name, linkTo }) => (
+            <Link key={name} to={linkTo}>
+              {name}
+            </Link>
+          ))}
           <button
             className="bg-gray-700 text-text px-4 py-2 rounded-lg hover:bg-button-hover"
             onClick={() => {
